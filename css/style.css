@@ -9,8 +9,8 @@
 @font-face {
     font-family: 'oldlondon';
     /*src: url('./Fonts/crusades-webfont.eot');*/
-    src: url(/Fonts/old_london/OldLondon.ttf), url(/Fonts/old_london/OldLondonAlternate.ttf);
-    src: url(/Fonts/old_london/Olondon_.otf), url(/Fonts/old_london/Olondona.otf);
+    src: url(/fonts/old_london/OldLondon.ttf), url(/fonts/old_london/OldLondonAlternate.ttf);
+    src: url(/fonts/old_london/Olondon_.otf), url(/fonts/old_london/Olondona.otf);
     font-weight: normal;
     font-style: normal;
 }
