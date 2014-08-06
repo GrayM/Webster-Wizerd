@@ -1,17 +1,54 @@
 *, *:after, *:before {
     box-sizing: border-box;
     transition: all .25s ease;
+    font-family: 'oldlondon';
+    /*color: #dcac7f;*/
 }
-
 /* ---------------- container section */
 
-.container {
-	max-width: 800px;
-	margin: 0 auto;
+@font-face {
+    font-family: 'oldlondon';
+    /*src: url('./Fonts/crusades-webfont.eot');*/
+    src: url(/Fonts/old_london/OldLondon.ttf), url(/Fonts/old_london/OldLondonAlternate.ttf);
+    src: url(/Fonts/old_london/Olondon_.otf), url(/Fonts/old_london/Olondona.otf);
+    font-weight: normal;
+    font-style: normal;
+}
+.header h1 {
+    /*color: #ddd;*/
+    font-family: 'oldlondon';
+    text-shadow: 0px 5px 3px black;
+    /*, sans-serif;*/
+    
 }
 
+.container {
+    background-image:url(http://students.pdht.ca/f10_web1/janestirling/stirlingj_portfolio/Background_Parchment_2.gif);
+    background-repeat:no-repeat;
+    background-size:100%;
+    width: 800px;
+    margin: 0 auto;
+    padding: 70px;
+}
 /* ---------------- header section */
 
 .header {
-	text-align: center;
+    text-align: center;
 }
+.button {
+    border-radius: 10px;
+    
+}
+input {
+    background-color: #999;
+    color: #222;
+
+}
+input.active {
+	background-color:#9d4c5a;
+}
+button {
+	border-radius:20px;
+	height:30px;
+    min-width:50px;
+	}
