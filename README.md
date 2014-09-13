@@ -1,3 +1,3 @@
---A light web app with a medieval twist that pulls API data from dictionaryapi.com
---Returns word definition(s), synonyms and etymology
+--A light web app with a medieval twist that pulls API data from dictionaryapi.com<br>
+--Returns word definition(s), synonyms and etymology<br>
 --Replaces instances of words with their Old English counterparts; do/doth, you/thee, our/ye, your/thy, yours/thine, etc.
