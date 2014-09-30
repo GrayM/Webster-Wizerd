@@ -25,14 +25,19 @@ WebsterWizerd.prototype.getDefinition = function(word) {
     ];
 
     var dict_url = (dictionary_url_array.join(''));
-    return $.get(dict_url).then(
-        function(xml) {
-            return xmlToJson(xml); // whatever I return here
-        }
-    );
+    
+    return $.get(dict_url).then(function(data) {
+        var oParser = new DOMParser();
+        var XMLtoString = new XMLSerializer().serializeToString(data);
+        var cleaned = XMLtoString.replace(/:/gi, '').replace(/'do'/gi, 'doth').replace(/'he'/gi, 'thee').replace(/our/gi, 'ye').replace(/old/gi, 'olde').replace(/you/gi, 'thou').replace(/(your)/gi, "thy").replace(/yours/gi, "thine");
+        var cleanedStringtoXML = oParser.parseFromString(cleaned, "text/xml");
+        console.log(cleanedStringtoXML);
+        return xmlToJson(cleanedStringtoXML);
+    });
 }
 
 WebsterWizerd.prototype.getThesaurus = function(word) {
+
     var thesaurus_url_array = [
         this.thesaurus_url,
         word,
@@ -41,11 +46,15 @@ WebsterWizerd.prototype.getThesaurus = function(word) {
     ];
 
     var thes_url = (thesaurus_url_array.join(''));
-    return $.get(thes_url).then(
-        function(xml) {
-            return xmlToJson(xml);
-        }
-    );
+    return $.get(thes_url).then(function(data) {
+        var oParser = new DOMParser();
+        var XMLtoString = new XMLSerializer().serializeToString(data);
+        var cleaned = XMLtoString.replace(/'do'/gi, 'doth').replace(/'he'/gi, 'thee').replace(/our/gi, 'ye').replace(/old/gi, 'olde').replace(/you/gi, 'thou').replace(/(your)/gi, "thy").replace(/yours/gi, "thine");
+        var cleanedStringtoXML = oParser.parseFromString(cleaned, "text/xml");
+        console.log(cleanedStringtoXML);
+        return xmlToJson(cleanedStringtoXML);
+    });
+
 }
 
 // showResults() is a prototype function which:
@@ -107,6 +116,7 @@ WebsterWizerd.prototype.showResults = function(word) {
     )
 }
 
+
 // function to retrieve the template
 WebsterWizerd.prototype.getTemplate = function(template_url) {
     return $.get(template_url).then(
@@ -121,6 +131,15 @@ WebsterWizerd.prototype.getTemplate = function(template_url) {
 WebsterWizerd.prototype.handleEvents = function() {
     var self = this;
     var charlie = document.querySelector('#charlie');
+
+    $('.container').on('submit', 'form', function(event) {
+        event.preventDefault();
+        if (charlie.value === "") {
+            alert("NO CHARLES NO");
+            return;
+        }
+        location.hash = '#'+charlie.value;
+    })
 
     $('.container').on('click', '.sound-button', function() {
         var prefix = "http://media.merriam-webster.com/soundc11/";
@@ -158,34 +177,6 @@ var Router = Backbone.Router.extend({
 });
 
 
-
-//     ____             __   __                              _
-//    / __ )____ ______/ /__/ /_  ____  ____  ___     _   __(_)__ _      _______
-//   / __  / __ `/ ___/ //_/ __ \/ __ \/ __ \/ _ \   | | / / / _ \ | /| / / ___/
-//  / /_/ / /_/ / /__/ ,< / /_/ / /_/ / / / /  __/   | |/ / /  __/ |/ |/ (__  )
-// /_____/\__,_/\___/_/|_/_.___/\____/_/ /_/\___/    |___/_/\___/|__/|__/____/
-
-
-var HeaderView = Backbone.View.extend({
-
-    el: document.querySelector('.header'),
-
-    events: {
-        "submit form": "search",
-    },
-
-    search: function() {
-        event.preventDefault();
-        // var input = this.$el.find('input')[0];
-        var input = this.el.querySelector('input');
-        if (input.value !== "") {
-            location.hash = '#' + input.value;
-        }
-    }
-
-});
-
-
 //                              __  _                               __
 //   ___  _  _____  _______  __/ /_(_)___  ____     _________  ____/ /__
 //  / _ \| |/_/ _ \/ ___/ / / / __/ / __ \/ __ \   / ___/ __ \/ __  / _ \
@@ -196,9 +187,6 @@ var HeaderView = Backbone.View.extend({
 window.onload = app;
 
 function app() {
-
-    myHeaderView = new HeaderView();
-
     var myRouter = new Router();
     if (!Backbone.history.start()) {
         myRouter.navigate("magic", {
